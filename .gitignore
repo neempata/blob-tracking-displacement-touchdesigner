@@ -1,0 +1,14 @@
+# TouchDesigner automatic project backups and local temporary files
+Backup/
+*.toe~
+*.tmp
+*.bak
+
+# Python cache files created by DAT scripts
+__pycache__/
+*.py[cod]
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+desktop.ini
