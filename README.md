@@ -72,4 +72,6 @@ needed.
   input configuration after opening it on another computer.
 
 ## Improvements
-I would like to add texts on the blobs next (e.g numbered blobs).
+-I would like to add texts on the blobs next (e.g numbered blobs).
+-I would also like to experiment with filters added to the blob tracking windows for 
+ more cooler visual effects.
