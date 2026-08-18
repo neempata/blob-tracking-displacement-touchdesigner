@@ -71,4 +71,5 @@ needed.
 - If a project copy contains machine-specific device settings, recheck the
   input configuration after opening it on another computer.
 
-  ## Improvements
+## Improvements
+I would like to add texts on the blobs next (e.g numbered blobs).
