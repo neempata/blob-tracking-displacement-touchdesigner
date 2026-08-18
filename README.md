@@ -70,3 +70,5 @@ needed.
   essential project references.
 - If a project copy contains machine-specific device settings, recheck the
   input configuration after opening it on another computer.
+
+  ## Improvements
