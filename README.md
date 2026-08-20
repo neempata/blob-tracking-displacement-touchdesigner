@@ -5,18 +5,6 @@ workflow. It is organized as a compact project file with versioned working
 copies, making it easy to open the latest composition, tune the tracking chain,
 and save experiments without replacing the main file.
 
-## Project Files
-
-- `blobtracking.toe`: current working project
-- `blobtracking.9.toe`: latest numbered snapshot
-- `blobtracking.8.toe`: earlier snapshot
-- `NewProject.toe`: original project copy
-- `Backup/`: TouchDesigner-generated backup files; kept locally but ignored by
-  Git
-
-Use `blobtracking.toe` as the normal entry point. The numbered files are useful
-reference points when comparing changes or recovering an earlier setup.
-
 ## Requirements
 
 - [TouchDesigner](https://derivative.ca/), using a version compatible with the
