@@ -7,7 +7,6 @@ Backup/
 # Python cache files created by DAT scripts
 __pycache__/
 *.py[cod]
-*.$pytest
 
 # Operating-system metadata
 .DS_Store
