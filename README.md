@@ -1,4 +1,4 @@
-# Blob Tracking
+# Blob Tracking Displacement filter
 
 A TouchDesigner project for building and iterating on a real-time blob-tracking
 workflow. It is organized as a compact project file with versioned working
