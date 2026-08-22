@@ -1,35 +1,83 @@
-# Blob Tracking Displacement filter
+# Blob Tracking Displacement Filter
 
-A TouchDesigner project for building and iterating on a real-time blob-tracking
-workflow. It is organized as a compact project file with versioned working
-copies, making it easy to open the latest composition, tune the tracking chain,
-and save experiments without replacing the main file.
+This is a small [TouchDesigner](https://derivative.ca/) project that turns the
+shapes in an image into moving visual effects. It uses blob tracking to find
+distinct areas in a camera feed, video, or other image input, then uses that
+tracking information to influence a displaced or filtered version of the image.
 
-## Requirements
+The project is intended as a place to learn and experiment. You do not need to
+understand every operator before opening it. Start by following the image
+through the network and observing how it changes at each stage.
 
-- [TouchDesigner](https://derivative.ca/), using a version compatible with the
-  project file
-- A camera, capture device, video file, or other input configured in the
-  network when using live tracking
+## What Is a Blob?
 
-## Quick Start
+In this project, a *blob* is a connected bright or dark region in a processed
+image. For example, a hand against a plain background can become one or more
+blobs after the image is converted to a high-contrast black-and-white mask.
 
-1. Open `blobtracking.toe` in TouchDesigner.
-2. Confirm that the intended input source is available and producing an image.
-3. View the tracking output and adjust the relevant controls for the current
-   lighting, background, and subject.
-4. Save meaningful iterations under a new, descriptive project filename.
+TouchDesigner can calculate information about each blob, such as its position,
+size, and area. That information can then drive other parts of a composition:
+an image can bend around a blob, a circle can be drawn at its position, or text
+can be placed above it.
 
-## Working With the Project
+## How the Network Works
 
-Blob tracking is highly dependent on the input scene. When tuning the network,
-change one control at a time and check both the thresholded image and final
-tracking result. Stable lighting, clear contrast between the subject and its
-background, and a clean input image generally produce the most reliable
-results.
+The exact arrangement of operators is stored inside the `.toe` project file,
+but the project follows this general flow:
 
-Keep the main project file focused on the current working version. Use
-descriptive copies for experiments, for example:
+1. **Input** - A camera, movie, or other TOP provides the original image.
+2. **Image preparation** - The image is cleaned up and adjusted so the subject
+   stands out from the background. Common controls here include brightness,
+   contrast, blur, and color adjustments.
+3. **Threshold or mask** - The prepared image is reduced to areas that count as
+   foreground. This is the black-and-white image that makes the blobs easier to
+   see and track.
+4. **Blob tracking** - TouchDesigner analyzes the mask and reports the detected
+   blobs. Their position is usually represented as normalized coordinates, where
+   `0` is one side of the image and `1` is the other.
+5. **Displacement and output** - The image is warped or filtered to create the
+   final effect. The tracking result can be used to control where and how
+   strongly this happens.
+
+When exploring the network, TOPs are the image-processing operators, CHOPs
+carry changing numeric values, and COMPs contain or organize parts of the
+project. The viewer on an operator is useful: turn on viewers at different
+stages to compare the original input, mask, tracking result, and final output.
+
+## Opening the Project
+
+1. Install a TouchDesigner version that can open the project file.
+2. Open `blobtracking.9.toe`.
+3. Find the input operator and check that it is receiving an image. A camera
+   may need permission from the operating system, and a movie input may need a
+   valid file path on your computer.
+4. View the mask or threshold stage first. If the subject is not clearly
+   separated from the background there, blob tracking will not be reliable.
+5. View the tracking and final output stages, then adjust one control at a
+   time.
+
+If the project opens but the output is empty, check the input image before
+changing tracking settings. If the input works but no blobs appear, adjust the
+threshold and improve the contrast between the subject and background.
+
+## Tuning Tips for Beginners
+
+- Use even lighting and avoid reflections or shadows that could be mistaken
+  for blobs.
+- A simple, uncluttered background makes the mask much easier to control.
+- Change one parameter at a time so you can tell what caused the result.
+- Watch the mask while tuning. A useful mask has clear subject shapes without
+  lots of isolated specks.
+- If there are too many small blobs, try removing noise or increasing the
+  minimum blob size. If a subject disappears, make the threshold less strict
+  or improve the lighting.
+- Different inputs need different settings. Values that work for a webcam may
+  not work for a dark video or a brightly lit room.
+
+## Making Experiments
+
+Save the original project as a copy before making a large change. Useful names
+make it easier to return to an earlier idea:
 
 ```text
 blobtracking-low-light.toe
@@ -37,29 +85,26 @@ blobtracking-multi-subject.toe
 blobtracking-calibrated.toe
 ```
 
-## Version Control
+The `.toe` files are binary project files, so Git cannot show useful line-by-line
+diffs or merge their contents automatically. Small commits with a short note
+are the easiest way to remember what changed. Recheck camera paths, device
+settings, and other machine-specific values when opening a copy on another
+computer.
 
-TouchDesigner `.toe` files are binary project files. Git can store their
-history, but cannot provide useful line-by-line comparisons or automatic merge
-resolution. Make small, purposeful commits and include a short note describing
-the change, such as an input adjustment, threshold calibration, or tracking
-behavior update.
+## Ideas to Try Next
 
-The included `.gitignore` excludes automatic backups, temporary files, Python
-cache files, and operating-system metadata. It intentionally does not ignore
-project files or source media, so important creative work can be versioned when
-needed.
+- Add text that displays a number beside each detected blob. This will require
+  connecting each blob's position to a text or instancing system.
+- Add a small circle or marker at each blob position while debugging. Seeing the
+  marker move is often easier than judging the displacement effect alone.
+- Experiment with blur, feedback, trails, color effects, or different
+  displacement maps around the tracked areas.
+- Compare one large blob with several smaller blobs and note which tracking
+  settings produce stable results.
 
-## Notes
+## Project Checklist
 
-- Test with the actual camera and lighting setup before relying on the tracker
-  in a live environment.
-- Avoid committing large rendered videos or disposable captures unless they are
-  essential project references.
-- If a project copy contains machine-specific device settings, recheck the
-  input configuration after opening it on another computer.
-
-## Improvements
--I would like to add texts on the blobs next (e.g numbered blobs).
--I would also like to experiment with filters added to the blob tracking windows for 
- more cooler visual effects.
+Before using the effect in a live setup, test the complete input, mask,
+tracking, and output chain with the actual camera, lighting, and subject. Keep
+large rendered videos and disposable captures out of version control unless
+they are needed as project references.
